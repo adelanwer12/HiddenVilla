@@ -1,0 +1,45 @@
+@page "/"
+
+@* <h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+<SurveyPrompt Title="How is Blazor working for you?" /> *@
+
+<h2 class="bg-light border p-2">First Room</h2>
+<p>Room: @room.RoomName</p>
+<br>
+<br>
+<p>Room: @room.Price</p>
+<br>
+<input type="text" @bind-value="room.Price" @bind-value:event="oninput"> 
+<br>
+<input type="checkbox" @bind-value="room.IsActive" @bind-value:event="oninput" checked="@(room.IsActive? "checked":null)"> &nbsp; Is Active
+<p>this Room is @(room.IsActive? "Active": "Inactive")</p>
+<select @bind="selectedRoomProp">
+    @foreach (var prop in room.RoomProps)
+    {
+        <option value="@prop.Name">@prop.Name</option>
+        <br>
+        <span>@prop.Value</span>
+    }
+</select>
+<span>@selectedRoomProp</span>
+
+@code{
+    string selectedRoomProp="";
+
+    Models.BlazorRoom room = new Models.BlazorRoom(){
+        Id= Guid.Parse("b0a1e8fc-6d26-4089-9793-bebe79d938f4"),
+        RoomName = "Villa Suite",
+        IsActive = true,
+        Price= 499,
+        RoomProps = new List<Models.BlazorRoomProp>
+            {
+                new Models.BlazorRoomProp{Id= Guid.Parse("1e94190c-5d9a-447a-aa0b-88c6b0dd6eec"), Name="sq ft", Value=100},
+                new Models.BlazorRoomProp{Id= Guid.Parse("16d3669e-5f71-4246-bff7-4ff74cd8db08"), Name="occ", Value=3},
+                new Models.BlazorRoomProp{Id= Guid.Parse("616d1a53-4ef2-4193-ac09-52657dd95c3a"), Name="tv", Value=4},               
+            }
+            
+    };
+}
