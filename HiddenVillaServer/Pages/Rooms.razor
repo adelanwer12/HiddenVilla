@@ -1,0 +1,68 @@
+﻿@page "/hotelrooms"
+@using Models
+
+<h3>Rooms</h3>
+
+<table class="table table-dark">
+    <tbody>
+        @foreach (var room in _roomsList)
+        {
+            <tr>
+                <td><input type="text" @bind-value="room.RoomName" @bind-value:event="oninput" /></td>
+                <td><input type="text" @bind-value="room.Price" @bind-value:event="oninput" /></td>
+                @foreach (var prop in room.RoomProps)
+                {
+                    <td>@prop.Name - @prop.Value</td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+
+@foreach (var room in _roomsList)
+{
+    <p>@room.RoomName 's price is @room.Price</p>
+}
+
+
+
+@code{
+    @*private string selectedRoomProp = "";*@
+    readonly List<BlazorRoom> _roomsList = new List<BlazorRoom>();
+
+
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        _roomsList.Add(new BlazorRoom
+        {
+            Id = Guid.Parse("b0a1e8fc-6d26-4089-9793-bebe79d938f4"),
+            RoomName = "Villa Suite",
+            IsActive = true,
+            Price = 499,
+            RoomProps = new List<BlazorRoomProp>
+    {
+             new BlazorRoomProp{Id= Guid.Parse("1e94190c-5d9a-447a-aa0b-88c6b0dd6eec"), Name="sq ft", Value=100},
+                new BlazorRoomProp{Id= Guid.Parse("16d3669e-5f71-4246-bff7-4ff74cd8db08"), Name="occ", Value=3},
+                new BlazorRoomProp{Id= Guid.Parse("616d1a53-4ef2-4193-ac09-52657dd95c3a"), Name="tv", Value=4},
+             }
+
+        });
+        _roomsList.Add(new BlazorRoom
+        {
+            Id = Guid.Parse("11c3c0d6-a034-4d8b-8611-9e10a9cc9c75"),
+            RoomName = "Adel Suite",
+            IsActive = true,
+            Price = 400,
+            RoomProps = new List<BlazorRoomProp>
+    {
+                new BlazorRoomProp{Id= Guid.Parse("4d47c11b-1579-4e49-95a1-6cdb95028662"), Name="sq ft", Value=100},
+                new BlazorRoomProp{Id= Guid.Parse("45c9e86d-b3ce-40ae-8533-781e8469311b"), Name="occ", Value=3},
+                new BlazorRoomProp{Id= Guid.Parse("a2ec8971-959d-45fb-9cae-b57b588d8517"), Name="tv", Value=4},
+            }
+
+        });
+    }
+
+}

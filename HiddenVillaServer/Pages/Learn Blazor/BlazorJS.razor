@@ -1,0 +1,42 @@
+@page "/blazorJs"
+@using HiddenVillaServer.Helper
+@inject IJSRuntime JsRuntime
+
+<h3>BlazorJS</h3>
+<div class="row">
+    <button class="btn btn-secondary" @onclick="(()=>TestConfirmBox(confirmMessage))">Test Confirm Button</button>
+</div>
+<div class="row">
+    <button class="btn btn-success" @onclick="TestSuccess">Test Confirm Button</button>
+    <button class="btn btn-danger" @onclick="TestFailure">Test Confirm Button</button>
+</div>
+<div class="row">
+    @if (ConfirmResult)
+    {
+        <p>confirmed</p>
+    }
+    else
+    {
+        <p>not confirmed</p>
+    }
+</div>
+@code {
+    private string confirmMessage = "Are You Sure you want to click?";
+    private bool ConfirmResult { get; set; }
+
+    private async Task TestConfirmBox(string message)
+    {
+        ConfirmResult = await JsRuntime.InvokeAsync<bool>("confirm", confirmMessage);
+    }
+
+    private async Task TestSuccess()
+    {
+        await JsRuntime.ToastrSuccess("Successes");
+    }
+
+    private async Task TestFailure()
+    {
+        await JsRuntime.ToastrError("Error Message");
+    }
+
+}
